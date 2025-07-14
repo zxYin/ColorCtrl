@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+
+<html>
+
+<head lang="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <title>ColorCtrl</title>
+
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="./files/bootstrap.min.css">
+    <link rel="stylesheet" href="./files/font-awesome.min.css">
+    <link rel="stylesheet" href="./files/codemirror.min.css">
+    <link rel="stylesheet" href="./files/app.css">
+</head>
+
+<body>
+    <div class="container" id="main">
+        <div class="row">
+            <h1 class="col-md-20 text-center">
+                <br>
+                <b>ColorCtrl</b>: Training-Free Text-Guided Color Editing with Multi-Modal Diffusion Transformer<br>
+<!--                 <small>
+                    CVPR 2022 (Oral Presentation)
+                </small> -->
+            </h1>
+            <hr style="margin-top:0px">
+        </div>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <ul class="list-inline">
+                    <li>
+                        <a href="https://zxyin.github.io" style="font-size: 16px;">
+                            Zixin Yin
+                        </a>
+                        <sup>1,2</sup>
+                    </li>
+                    <li>
+                        <a href="https://delay-xili.github.io" style="font-size: 16px;">
+                            Xili Dai
+                        </a>
+                        <sup>4</sup>
+                    </li>
+                    <li>
+                        <a href="https://lhchen.top" style="font-size: 16px;">
+                            Ling-Hao Chen
+                        </a>
+                        <sup>3</sup>
+                    </li>
+                    <li>
+                        <a style="font-size: 16px;">
+                            Deyu Zhou
+                        </a>
+                        <sup>4,6</sup>
+                    </li>
+                    <li>
+                        <a style="font-size: 16px;">
+                            Jianan Wang
+                        </a>
+                        <sup>5</sup>
+                    </li>
+                    <li>
+                        <a href="https://dorniwang.github.io" style="font-size: 16px;">
+                            Duomin Wang
+                        </a>
+                        <sup>6</sup>
+                    </li><br>
+                    <li>
+                        <a href="https://www.skicyyu.org" style="font-size: 16px;">
+                            Gang Yu
+                        </a>
+                        <sup>6</sup>
+                    </li>
+                    <li>
+                        <a href="https://seng.hkust.edu.hk/about/people/faculty/lionel-ming-shuan-ni" style="font-size: 16px;">
+                            Lionel M. Ni
+                        </a>
+                        <sup>4,1</sup>
+                    </li>
+                    <li>
+                        <a href="https://www.leizhang.org" style="font-size: 16px;">
+                            Lei Zhang
+                        </a>
+                        <sup>2</sup>
+                    </li>
+                    <li>
+                        <a href="https://www.microsoft.com/en-us/research/people/hshum/" style="font-size: 16px;">
+                            Heung-Yeung Shum
+                        </a>
+                        <sup>1</sup>
+                    </li><br>
+                    <a></a><br>
+                    <li>
+                        <sup>1</sup>
+                        <a href="https://hkust.edu.hk/"
+                            style="font-size: 16px;">
+                            The Hong Kong University of Science and Technology
+                        </a>
+                    </li>
+                    <li>
+                        <sup>2</sup>
+                        <a href="https://www.idea.edu.cn" style="font-size: 16px;">
+                            International Digital Economy Academy
+                        </a>
+                    </li>
+                    <li>
+                        <sup>3</sup>
+                        <a href="https://www.tsinghua.edu.cn/en/" style="font-size: 16px;">
+                            Tsinghua University
+                        </a>
+                    </li>
+                    <li>
+                        <sup>4</sup>
+                        <a href="https://www.hkust-gz.edu.cn" style="font-size: 16px;">
+                            The Hong Kong University of Science and Technology (Guangzhou)
+                        </a>
+                    </li>
+                    <li>
+                        <sup>5</sup>
+                        <a href="https://www.astribot.com" style="font-size: 16px;">
+                            Astribot
+                        </a>
+                    </li>
+                    <li>
+                        <sup>6</sup>
+                        <a href="https://www.stepfun.com" style="font-size: 16px;">
+                            StepFun
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4 text-center">
+                <ul class="nav nav-pills nav-justified">
+                    <li>
+                        <a href="https://arxiv.org/abs/2212.04248">
+                            <img loading="lazy" src="./files/paper.jpg" height="60px">
+                            <h4><strong>Paper</strong></h4>
+                        </a>
+                    </li>
+                    <li>
+                        <a>
+                            <img loading="lazy" src="./files/github.png" height="60px">
+                            <h4><strong>Code (coming soon)</strong></h4>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 col-md-offset-0 text-center">
+                <a>
+                    <img loading="lazy" src="./files/teaser.pdf" style="display: block; max-width: 100%; margin: 0 auto;" alt="teaser">
+                </a>
+                <p class="text-justify" style="font-size: 16px;">
+                    Our method, ColorCtrl with FLUX.1-dev, edits colors across multiple materials while preserving light-matter interactions. 
+                    For example, in the fourth case, the ball's color, its water reflection, specular highlights, and even small droplets on 
+                    the glass have all been changed. It also enables fine-grained control over the intensity of specific descriptive terms.
+                </p>
+                <br>
+                <h2>
+                    Abstract
+                </h2>
+                <hr style="margin-top:0px">
+                <p class="text-justify" style="font-size: 16px;">
+                    Text-guided color editing in images and videos is a fundamental yet unsolved problem, requiring fine-grained manipulation 
+                    of color attributes, including albedo, light source color, and ambient lighting, while preserving physical consistency in 
+                    geometry, material properties, and light-matter interactions. Existing training-free methods offer broad applicability across 
+                    editing tasks but struggle with precise color control and often introduce visual inconsistency in both edited and non-edited 
+                    regions. In this work, we present ColorCtrl, a training-free color editing method that leverages the attention mechanisms 
+                    of modern Multi-Modal Diffusion Transformers (MM-DiT). By disentangling structure and color through targeted manipulation 
+                    of attention maps and value tokens, our method enables accurate and consistent color editing, along with word-level control 
+                    of attribute intensity. Our method modifies only the intended regions specified by the prompt, leaving unrelated areas untouched. 
+                    Extensive experiments on both SD3 and FLUX.1-dev demonstrate that ColorCtrl outperforms existing training-free approaches 
+                    and achieves state-of-the-art performances in both edit quality and consistency. Furthermore, our method surpasses strong 
+                    commercial models such as FLUX.1 Kontext Max and GPT-4o Image Generation in terms of consistency. When extended to video 
+                    models like CogVideoX, our approach exhibits greater advantages, particularly in maintaining temporal coherence and editing 
+                    stability. Finally, our method also generalizes to instruction-based editing diffusion models such as Step1X-Edit and FLUX.1 
+                    Kontext dev, further demonstrating its versatility.
+                </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 col-md-offset-0 text-center">
+                <br>
+                <h2>
+                    Overview
+                </h2>
+                <hr style="margin-top:0px">
+                <img loading="lazy" src="./files/pipeline.pdf" style="display: block; max-width: 100%; margin: 0 auto;" alt="overview"><br>
+                <p class="text-justify" style="font-size: 16px;">
+                    Pipeline of ColorCtrl. (a) Reviews the attention mechanism in MM-DiT blocks. (b) Enables effective color editing while 
+                    maintaining structural consistency. (c) Preserves colors in non-editing regions. (d) Applies attribute re-weighting to 
+                    specific word tokens.
+                </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 col-md-offset-0 text-center">
+                <br>
+                <h2>
+                    Comparison with Methods (Images)
+                </h2>
+                <hr style="margin-top:0px">
+                <p class="text-justify" style="font-size: 16px;">
+                    We show benchmark results on both SD3 and FLUX.1-dev below, comparing our method with other training-free 
+                    baselines. Our method achieves <b>state-of-the-art</b> performance, delivering superior results in both 
+                    preserving source content and executing accurate edits.
+                </p>
+                <img loading="lazy" src="./files/table1.jpg" style="display: block; max-width: 100%; margin: 0 auto;" alt="overview">
+                <b>Quantitative image results compared with training-free methods on PIE-Bench.</b> Results for FireFlow on 
+                SD3 are omitted due to consistency worse than that obtained using fixed seeds.
+                <br/>
+                <br><img loading="lazy" src="./files/table5.jpg" style="display: block; max-width: 100%; margin: 0 auto;" alt="overview">
+                <b>Quantitative image results compared with training-free methods on ColorCtrl-Bench.</b> Results for 
+                FireFlow on SD3 are omitted due to consistency worse than that obtained using fixed seeds.
+                <br/>
+                <br><p class="text-justify" style="font-size: 16px;">
+                    We compare our method (based on SD3 and FLUX.1-dev) with two commercial models: FLUX.1 Kontext Max and GPT-4o Image 
+                    Generation. Despite being based on open-source models, our approach achieves superior layout and detail 
+                    consistency, as well as better preservation of non-edited regions. While the CLIP similarity scores of our 
+                    method are slightly lower, visual results in Fig.~\ref{fig:gallery} reveal that the commercial models often 
+                    rely on <b>over-saturated, unrealistic edits</b> to better align with prompts. For example, in the top row, 
+                    FLUX.1 Kontext Max recolors the entire mouse, including its magic wand, in solid purple, while GPT-4o produces a 
+                    dark, dissonant shade. In contrast, our method applies a harmonious color. In the second row, only our method 
+                    preserves the shirt's semi-transparency, whereas the commercial models render it as opaque yellow, ignoring 
+                    material properties. In the third row, our method respects the muted tone of "green tea" and edits the ice cream 
+                    to a natural reddish-brown "red tea" color. The commercial models, however, apply an unnaturally pure red. In 
+                    the final row, although the prompt requests a "yellow kitten", no naturally occurring cat has a truly pure 
+                    yellow coat. Our method instead generates a kitten with the closest plausible fur color, aligned with real-world 
+                    appearances, unlike the commercial models, which apply flat, high-saturation tones that appear unnatural. These 
+                    results demonstrate that higher CLIP similarity does not necessarily indicate better edit quality. It often 
+                    stems from prompt overfitting while compromising realism and consistency. Overall, our method consistently 
+                    produces more faithful, controllable edits, even built on open-source models.
+                </p>
+                <img loading="lazy" src="./files/table2.jpg" style="display: block; max-width: 100%; margin: 0 auto;" alt="overview">
+                <b>Quantitative image results compared with commercial models on PIE-Bench.</b>
+                <br/>
+                <br><img loading="lazy" src="./files/table6.jpg" style="display: block; max-width: 100%; margin: 0 auto;" alt="overview">
+                <b>Quantitative image results compared with commercial models on ColorCtrl-Bench.</b>
+                <br/>
+                <br><img loading="lazy" src="./files/gallery.pdf" style="display: block; max-width: 100%; margin: 0 auto;" alt="overview">
+                <b>Qualitative image results compared with training-free methods and commercial models on PIE-Bench.</b> The top three 
+                rows are generated using FLUX.1-dev, while the bottom two are generated using SD3.
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 col-md-offset-0 text-center">
+                <br>
+                <h2>
+                    Comparison with Methods (Videos)
+                </h2>
+                <hr style="margin-top:0px">
+                <p class="text-justify" style="font-size: 16px;">
+                    We presents benchmark results on CogVideoX-2B. Since FLUX.1 Kontext Max and GPT-4o do not support video editing, 
+                    we compare only with other training-free methods. Similar to image editing, our method outperforms all baselines. 
+                    Notably, the performance gap becomes even more pronounced due to the added temporal dimension.
+                </p>
+                <img loading="lazy" src="./files/table3.jpg" style="display: block; max-width: 100%; margin: 0 auto;" alt="overview">
+                <b>Quantitative video results compared with baselines on PIE-Bench and ColorCtrl-Bench.</b>
+                <br/>
+                <br>
+                <p class="text-justify" style="font-size: 16px;">
+                    Here is a example of changing the ice-cream from "green tea" to "red tea" on PIE-Bench and changing the backpack from "green" to "yellow" on ColorCtrl-Bench.
+                </p>
+                <div class="row">
+                    <div class="col-md-4 col-md-offset-4 text-center">
+                        <video class="sync-video" playsinline loop muted controls style="width: 100%;">
+                            <source src="./files/source1.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <p style="font-size: 16px; text-align: center; margin-top: 5px;">Source</p>
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 20px;">
+                    <div class="col-md-4 text-center" style="margin-bottom: 20px;">
+                        <video class="sync-video"playsinline loop muted controls style="width: 100%;">
+                            <source src="./files/ours1.mp4" type="video/mp4">
+                        </video>
+                        <p style="font-size: 16px; margin-top: 5px;">Ours</p>
+                    </div>
+                    <div class="col-md-4 text-center" style="margin-bottom: 20px;">
+                        <video class="sync-video" playsinline loop muted controls style="width: 100%;">
+                            <source src="./files/dit1.mp4" type="video/mp4">
+                        </video>
+                        <p style="font-size: 16px; margin-top: 5px;">DiTCtrl</p>
+                    </div>
+                    <div class="col-md-4 text-center" style="margin-bottom: 20px;">
+                        <video class="sync-video" playsinline loop muted controls style="width: 100%;">
+                            <source src="./files/uni1.mp4" type="video/mp4">
+                        </video>
+                        <p style="font-size: 16px; margin-top: 5px;">UniEdit-Flow</p>
+                    </div>
+                    <div class="col-md-4 text-center" style="margin-bottom: 20px;">
+                        <video class="sync-video" playsinline loop muted controls style="width: 100%;">
+                            <source src="./files/fire1.mp4" type="video/mp4">
+                        </video>
+                        <p style="font-size: 16px; margin-top: 5px;">FireFlow</p>
+                    </div>
+                    <div class="col-md-4 text-center" style="margin-bottom: 20px;">
+                        <video class="sync-video" playsinline loop muted controls style="width: 100%;">
+                            <source src="./files/rf1.mp4" type="video/mp4">
+                        </video>
+                        <p style="font-size: 16px; margin-top: 5px;">RF-Solver</p>
+                    </div>
+                    <div class="col-md-4 text-center" style="margin-bottom: 20px;">
+                        <video class="sync-video" playsinline loop muted controls style="width: 100%;">
+                            <source src="./files/sd1.mp4" type="video/mp4">
+                        </video>
+                        <p style="font-size: 16px; margin-top: 5px;">SDEdit</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 col-md-offset-4 text-center">
+                        <video class="sync-video" playsinline loop muted controls style="width: 100%;">
+                            <source src="./files/source2.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <p style="font-size: 16px; text-align: center; margin-top: 5px;">Source</p>
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 20px;">
+                    <div class="col-md-4 text-center" style="margin-bottom: 20px;">
+                        <video class="sync-video"playsinline loop muted controls style="width: 100%;">
+                            <source src="./files/ours2.mp4" type="video/mp4">
+                        </video>
+                        <p style="font-size: 16px; margin-top: 5px;">Ours</p>
+                    </div>
+                    <div class="col-md-4 text-center" style="margin-bottom: 20px;">
+                        <video class="sync-video" playsinline loop muted controls style="width: 100%;">
+                            <source src="./files/dit2.mp4" type="video/mp4">
+                        </video>
+                        <p style="font-size: 16px; margin-top: 5px;">DiTCtrl</p>
+                    </div>
+                    <div class="col-md-4 text-center" style="margin-bottom: 20px;">
+                        <video class="sync-video" playsinline loop muted controls style="width: 100%;">
+                            <source src="./files/uni2.mp4" type="video/mp4">
+                        </video>
+                        <p style="font-size: 16px; margin-top: 5px;">UniEdit-Flow</p>
+                    </div>
+                    <div class="col-md-4 text-center" style="margin-bottom: 20px;">
+                        <video class="sync-video" playsinline loop muted controls style="width: 100%;">
+                            <source src="./files/fire2.mp4" type="video/mp4">
+                        </video>
+                        <p style="font-size: 16px; margin-top: 5px;">FireFlow</p>
+                    </div>
+                    <div class="col-md-4 text-center" style="margin-bottom: 20px;">
+                        <video class="sync-video" playsinline loop muted controls style="width: 100%;">
+                            <source src="./files/rf2.mp4" type="video/mp4">
+                        </video>
+                        <p style="font-size: 16px; margin-top: 5px;">RF-Solver</p>
+                    </div>
+                    <div class="col-md-4 text-center" style="margin-bottom: 20px;">
+                        <video class="sync-video" playsinline loop muted controls style="width: 100%;">
+                            <source src="./files/sd2.mp4" type="video/mp4">
+                        </video>
+                        <p style="font-size: 16px; margin-top: 5px;">SDEdit</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 col-md-offset-0 text-center">
+                <h2>
+                    Attribute Re-Weighting Analysis
+                </h2>
+                <hr style="margin-top:0px">
+                <p class="text-justify" style="font-size: 16px;">
+                    The results below show that our method not only supports re-weighting a single attribute within the same prompt, 
+                    but also allows adjusting attribute strength across different prompts (second row). Moreover, our method can re-weight 
+                    multiple attributes simultaneously (third row). Overall, these results demonstrate that our method enables smooth 
+                    and controllable transitions in attribute strength, while preserving structural consistency across the image and 
+                    maintaining color fidelity in non-edited regions, on both SD3 and FLUX.1-dev.
+                </p>
+                <img loading="lazy" src="./files/strength.pdf" style="display: block; max-width: 100%; margin: 0 auto;" alt="overview">
+                <b>Examples of attribute re-weighting.</b> The top two rows are generated using FLUX.1-dev, while the bottom two are 
+                generated using SD3.
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 col-md-offset-0 text-center">
+                <br>
+                <h2>
+                    Generalization to Instruction-based Editing Diffusion Models
+                </h2>
+                <hr style="margin-top:0px">
+                <p class="text-justify" style="font-size: 16px;">
+                    In addition to text-to-image and text-to-video models, ColorCtrl is also compatible with instruction-based editing 
+                    diffusion models, such as Step1X-Edit and FLUX.1 Kontext dev. Given a real input image and a target editing instruction, 
+                    the model performs edits accordingly. However, performing a second round of editing using the original model alone often 
+                    leads to structural inconsistencies, such as distortions or shifts in shadows and edges. By incorporating our method, 
+                    the model can further refine color edits while preserving structural fidelity. Compared to using the base model alone, 
+                    our approach achieves better outline consistency and improved preservation of subtle visual cues like shadows.
+                </p>
+                <img loading="lazy" src="./files/step1x-edit.pdf" style="display: block; max-width: 100%; margin: 0 auto;" alt="overview">
+                <b>Examples of results generated with Step1X-Edit (left) and FLUX.1 Kontext dev (right).</b> Green arrows: first edit using 
+                the editing model. Blue arrows: second edit using the editing model. Orange arrows: second edit using the editing model with 
+                ColorCtrl. Top left: a red diamond is added to the neck, then changed to blue. Bottom left: an orange cap is added, then 
+                changed to purple. Top right: blue butterflies are added, then changed to yellow. Bottom right: a flashlight with blue light 
+                is added, then changed to green.
+                <br/>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 col-md-offset-0 text-center">
+                <br>
+                <h2>
+                    Real Image Editing
+                </h2>
+                <hr style="margin-top:0px">
+                <p class="text-justify" style="font-size: 16px;">
+                    To apply ColorCtrl to real images, we integrate UniEdit-Flow for inversion and replace the original editing module 
+                    with our method. The results demonstrate that our approach generalizes well to real-world inputs on both SD3 and 
+                    FLUX.1-dev, preserving fine-grained consistency (\textit{e.g.}, subtle fabric wrinkles and shadows) while delivering 
+                    strong editing performance. Notably, in the top row, even when editing black clothing, ColorCtrl accurately distinguishes 
+                    material shading from cast shadows, resulting in illumination-consistent edits.
+                </p>
+                <img loading="lazy" src="./files/real_img.pdf" style="display: block; max-width: 100%; margin: 0 auto;" alt="overview">
+                <b>Examples of real image editing.</b> Left: results generated with SD3. Right: results generated with FLUX.1-dev.
+                generated using SD3.
+                <br/>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 col-md-offset-0 text-center">
+                <br>
+                <h2>
+                    Ablation Study
+                </h2>
+                <hr style="margin-top:0px">
+                <p class="text-justify" style="font-size: 16px;">
+                    Starting from fixed random seed generation, we observe the highest CLIP similarity due to the lack of consistency 
+                    constraints. However, this comes at the cost of very low scores in Canny SSIM, as well as PSNR and SSIM in non-edited 
+                    regions, indicating poor structural and visual consistency. Introducing the structure preservation component 
+                    significantly improves all consistency metrics, suggesting that the geometric and material attributes are effectively 
+                    maintained, as also illustrated in Fig.~\ref{fig:editing_and_mask}. Adding the color preservation component completes 
+                    our method, which further enhances consistency, particularly in non-edited regions, while sacrificing almost no CLIP 
+                    similarity. Overall, the results validate the effectiveness of each component in our method.
+                </p>
+                <img loading="lazy" src="./files/table4.jpg" style="display: block; max-width: 100%; margin: 0 auto;">
+                <b>Ablation study evaluating the effectiveness of each component on PIE-Bench.</b>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 col-md-offset-0">
+                <div class="text-center">
+                    <br>
+                    <h2>
+                        Citation
+                    </h2>
+                </div>
+                <hr style="margin-top:0px">
+                <div class="form-group col-md-12 col-md-offset-0">
+                    <div class="CodeMirror cm-s-default CodeMirror-wrap" style="font-size: 16px;">
+                        <div
+                            style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 4px; left: 4px; ">
+                            <textarea autocorrect="off" autocapitalize="off" spellcheck="false"
+                                style="position: absolute; padding: 0px; width: 1000px; height: 1em; outline: none;"
+                                tabindex="0"></textarea></div>
+                        <div class="CodeMirror-vscrollbar" cm-not-content="true">
+                            <div style="min-width: 1px; height: 0px;"></div>
+                        </div>
+                        <div class="CodeMirror-hscrollbar" cm-not-content="true">
+                            <div style="height: 100%; min-height: 1px; width: 0px;"></div>
+                        </div>
+                        <div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div>
+                        <div class="CodeMirror-gutter-filler" cm-not-content="true"></div>
+                        <div class="CodeMirror-scroll" tabindex="-1">
+                            <div class="CodeMirror-sizer"
+                                style="margin-left: 0px; margin-bottom: -17px; border-right-width: 13px; min-height: 190px; padding-right: 0px; padding-bottom: 0px;">
+                                <div style="position: relative; top: 0px;">
+                                    <div class="CodeMirror-lines">
+                                        <div style="position: relative; outline: none;">
+                                            <div class="CodeMirror-measure">AخA</div>
+                                            <div class="CodeMirror-measure"></div>
+                                            <div style="position: relative; z-index: 1;"></div>
+                                            <div class="CodeMirror-cursors">
+                                            <div class="CodeMirror-cursor"
+                                                style="left: 4px; top: 0px; height: 17.1406px;">&nbsp;</div>
+                                            </div>
+                                            <div class="CodeMirror-code" style="">
+                                                <pre 
+                                                    class=" CodeMirror-line "><span style="padding-right: 0.1px;">@article{yin2025training,</span></pre>
+                                                <pre 
+                                                    class=" CodeMirror-line "><span style="padding-right: 0.1px;">&nbsp;  title={Training-Free Text-Guided Color Editing with Multi-Modal Diffusion Transformer},</span></pre>
+                                                <pre 
+                                                    class=" CodeMirror-line "><span style="padding-right: 0.1px;">&nbsp;  author={Zixin Yin, Xili Dai, Ling-Hao Chen, Deyu Zhou, Jianan Wang, Duomin Wang, Gang Yu, Lionel M. Ni, Lei Zhang and Heung-Yeung Shum},</span></pre>
+                                                <pre 
+                                                    class=" CodeMirror-line "><span style="padding-right: 0.1px;">&nbsp;  journal={arXiv preprint arXiv:},</span></pre>
+                                                <pre 
+                                                    class=" CodeMirror-line "><span style="padding-right: 0.1px;">&nbsp;  year={2025}</span></pre>
+                                                <pre 
+                                                    class=" CodeMirror-line "><span style="padding-right: 0.1px;">}</span></pre>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="position: absolute; height: 13px; width: 1px; top: 280px;"></div>
+                            <div class="CodeMirror-gutters" style="display: none; height: 300px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 col-md-offset-0 text-center">
+                <h2>
+                    Acknowledgements
+                </h2>
+                <hr style="margin-top:0px">
+                <p class="text-justify" style="font-size: 16px;">
+                    We thank Yukai Shi, Xuan Ju, Guanlong Jiao, Shihao Zhao, Xianfang Zeng, Huaizhe Xu, and Bojia Zi, for the advice and discussion to improve the paper. <br><br>
+                    The website template was adapted from <a href="https://zxyin.github.io/TH-PAD">TH-PAD</a>.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const videos = document.querySelectorAll('.sync-video');
+            
+            // Check if there are any videos to process
+            if (videos.length === 0) return;
+        
+            // A counter for ready videos
+            let readyCount = 0;
+        
+            const onVideoReady = () => {
+                readyCount++;
+                // When all videos are ready
+                if (readyCount === videos.length) {
+                    console.log('All videos are ready. Attempting synchronized playback.');
+                    playAllVideos();
+                }
+            };
+        
+            const playAllVideos = () => {
+                videos.forEach(video => {
+                    // Crucial for autoplay policy: Ensure video is muted
+                    video.muted = true; 
+                    
+                    // The play() method returns a Promise
+                    const playPromise = video.play();
+        
+                    if (playPromise !== undefined) {
+                        playPromise.catch(error => {
+                            // Autoplay was prevented.
+                            console.error("Autoplay prevented for video:", video.src, error);
+                            // You could show a play button here as a fallback
+                        });
+                    }
+                });
+            };
+        
+            videos.forEach(video => {
+                // Add playsinline for better mobile compatibility, especially on iOS
+                video.setAttribute('playsinline', ''); 
+        
+                // Listen for the 'canplaythrough' event
+                video.addEventListener('canplaythrough', onVideoReady, { once: true });
+        
+                // Fallback: Sometimes 'canplaythrough' might not fire, 
+                // especially if the video is already cached.
+                // The 'loadeddata' event is a good alternative.
+                if (video.readyState >= 3) { // HAVE_FUTURE_DATA or more
+                    onVideoReady();
+                } else {
+                    video.addEventListener('loadeddata', onVideoReady, { once: true });
+                }
+            });
+        });
+        </script>
+</body>
+</html>
